@@ -3308,7 +3308,7 @@ static inline int in_stable_tree(struct rmap_item *rmap_item)
  * scan_vma_one_page() - scan the next page in a vma_slot. Called with
  * mmap_sem locked.
  */
-static noinline void scan_vma_one_page(struct vma_slot *slot)
+static void scan_vma_one_page(struct vma_slot *slot)
 {
 	u32 hash;
 	struct mm_struct *mm;
@@ -3357,12 +3357,6 @@ void uksm_calc_rung_step(struct scan_rung *rung, unsigned long page_time)
 {
 	unsigned long sampled, pages;
 
-	/* will be fully scanned ? */
-	if (!rung->cover_msecs) {
-		rung->step = 1;
-		return;
-	}
-
 	sampled = rung->pages_to_scan;
 
 	/*
@@ -3374,7 +3368,7 @@ void uksm_calc_rung_step(struct scan_rung *rung, unsigned long page_time)
 		sampled = RUNG_SAMPLED_MIN;
 
 	pages = rung_get_pages(rung);
-	if (likely(pages > sampled))
+	if (pages > sampled)
 		rung->step = pages / sampled;
 	else
 		rung->step = 1;
@@ -3739,7 +3733,7 @@ static inline void free_all_tree_nodes(struct list_head *list)
  * stable_tree_delta_hash() - Delta hash the stable tree from previous hash
  * strength to the current hash_strength. It re-structures the hole tree.
  */
-static inline void stable_tree_delta_hash(u32 prev_hash_strength)
+static void stable_tree_delta_hash(u32 prev_hash_strength)
 {
 	struct stable_node *node, *tmp;
 	struct rb_root *root_new_treep;
@@ -4050,7 +4044,7 @@ static inline int rshash_adjust(void)
  * round_update_ladder() - The main function to do update of all the
  * adjustments whenever a scan round is finished.
  */
-static noinline void round_update_ladder(void)
+static void round_update_ladder(void)
 {
 	int i;
 	unsigned long dedup;
@@ -4418,9 +4412,9 @@ static inline int hash_round_finished(void)
 /**
  * uksm_do_scan()  - the main worker function.
  */
-static noinline void uksm_do_scan(void)
+static void uksm_do_scan(void)
 	__attribute__((hot));
-static noinline void uksm_do_scan(void)
+static void uksm_do_scan(void)
 {
 	struct vma_slot *slot, *iter;
 	struct mm_struct *busy_mm;
@@ -5291,7 +5285,7 @@ static ssize_t eval_intervals_store(struct kobject *kobj,
 		}
 
 		err = strict_strtoul(p, 10, &values[i]);
-		if (err) {
+		if (err || !values[i]) {
 			ret = -EINVAL;
 			goto out;
 		}
