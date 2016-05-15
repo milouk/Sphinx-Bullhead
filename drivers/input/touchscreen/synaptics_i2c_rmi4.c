@@ -121,10 +121,6 @@ enum device_status {
 #define F12_MAX_X		65536
 #define F12_MAX_Y		65536
 
-#ifdef CONFIG_THERMAL_MONITOR
-extern void msm_thermal_suspend(bool suspend);
-#endif
-
 static int synaptics_rmi4_i2c_read(struct synaptics_rmi4_data *rmi4_data,
 		unsigned short addr, unsigned char *data,
 		unsigned short length);
@@ -4672,19 +4668,12 @@ static int synaptics_rmi4_suspend(struct device *dev)
 	struct synaptics_rmi4_data *rmi4_data = dev_get_drvdata(dev);
 	int retval;
 
-
 #ifdef CONFIG_WAKE_GESTURES
 	if (gestures_enabled) {
 		s2w_enable(rmi4_data, true);
 		return 0;
 	}
 #endif
-
-#ifdef CONFIG_THERMAL_MONITOR
-	// Must be doen before msm_hotplug_suspend()
-	msm_thermal_suspend(true);
-#endif
-
 
 	if (rmi4_data->stay_awake) {
 		rmi4_data->staying_awake = true;
@@ -4781,10 +4770,6 @@ static int synaptics_rmi4_resume(struct device *dev)
 		s2w_enable(rmi4_data, false);
 		goto out;
 	}
-
-#ifdef CONFIG_THERMAL_MONITOR
-	msm_thermal_suspend(false);
-#endif
 
 	if (rmi4_data->staying_awake)
 		return 0;
