@@ -24,8 +24,13 @@
 
 #include "smpboot.h"
 
+
 #ifdef CONFIG_MSM_HOTPLUG
 #include <linux/msm_hotplug.h>
+#endif
+
+#ifdef CONFIG_THERMAL_MONITOR
+#include <linux/msm_thermal.h>
 #endif
 
 #ifdef CONFIG_SMP
@@ -458,6 +463,11 @@ int cpu_up(unsigned int cpu)
 		if (cpu >= 4 && !msm_hotplug_fingerprint_called)
 			return 0;
 	}
+#endif
+
+#ifdef CONFIG_THERMAL_MONITOR
+	if (cpus_offlined & BIT(cpu))
+		return 0;
 #endif
 
 	if (!cpu_possible(cpu)) {
