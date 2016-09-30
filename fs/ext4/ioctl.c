@@ -633,6 +633,10 @@ resizefs_out:
 		struct ext4_encryption_policy policy;
 		int err = 0;
 
+		if (!EXT4_HAS_INCOMPAT_FEATURE(sb,
+					       EXT4_FEATURE_INCOMPAT_ENCRYPT))
+			return -EOPNOTSUPP;
+
 		if (copy_from_user(&policy,
 				   (struct ext4_encryption_policy __user *)arg,
 				   sizeof(policy))) {
