@@ -266,6 +266,12 @@ config CPU_INPUT_BOOST
 	  Boosts the CPU on touchscreen and touchpad input. Boost frequencies and
 	  duration are configured via sysfs (/sys/kernel/cpu_input_boost/*).
 
+config FINGERPRINT_BOOST
+	bool "Fingerprint Boost"
+	default y
+	help
+	  Boosts available CPUs to max frequency on fingerprint sensor input.
+
 menu "x86 CPU frequency scaling drivers"
 depends on X86
 source "drivers/cpufreq/Kconfig.x86"
