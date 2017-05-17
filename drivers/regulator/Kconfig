@@ -627,5 +627,11 @@ config REGULATOR_DW8768
 	help
 	  This driver supports DW8768 voltage regulator. DW8768 is a power
 	  supply IC to support general positive/negative driven LCDs.
+	  
+config VOLTAGE_CONTROL
+	bool "Enable CPU voltage control"
+	help
+	  Enable CPU voltage control for MSM8994.
+
 endif
 
