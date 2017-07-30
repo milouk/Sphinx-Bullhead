@@ -1097,6 +1097,9 @@ static struct regulator_ops cpr_corner_ops = {
 };
 
 #ifdef CONFIG_VOLTAGE_CONTROL
+#define HFPLL_MIN_VDD		 300000
+#define HFPLL_MAX_VDD		1350000
+
 int cpr_regulator_get_corner_voltage(struct regulator *regulator,
 		int corner)
 {
@@ -1112,12 +1115,31 @@ int cpr_regulator_set_corner_voltage(struct regulator *regulator,
 		int corner, int volt)
 {
 	struct cpr_regulator *cpr_vreg = regulator_get_drvdata(regulator);
+	int delta_floor, delta_ceil;
+
+	/* Make sure voltages are in range */
+	volt = min(max(volt, HFPLL_MIN_VDD), HFPLL_MAX_VDD);
+
+	/* Set the floor and ceiling proportional to their original values */
+	delta_floor = cpr_vreg->floor_volt[corner]
+				- cpr_vreg->last_volt[corner];
+	delta_ceil = cpr_vreg->ceiling_volt[corner]
+				- cpr_vreg->last_volt[corner];
+
+	/* Make sure delta_floor and delta_ceil are valid */
+	if (delta_floor > 0) {
+		delta_floor = volt - 200000;
+	}
+
+	if (delta_ceil < 0) {
+		delta_ceil = volt + 100000;
+	}
 
 	if (corner >= CPR_CORNER_MIN && corner <= cpr_vreg->num_corners) {
 		mutex_lock(&cpr_vreg->cpr_mutex);
 		cpr_vreg->last_volt[corner] = volt;
-		cpr_vreg->ceiling_volt[corner] = volt;
-		cpr_vreg->floor_volt[corner] = volt - 200000;
+		cpr_vreg->ceiling_volt[corner] = volt + delta_ceil;
+		cpr_vreg->floor_volt[corner] = volt + delta_floor;
 		mutex_unlock(&cpr_vreg->cpr_mutex);
 		return 0;
 	}
