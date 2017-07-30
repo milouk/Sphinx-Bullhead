@@ -1135,6 +1135,8 @@ ssize_t cpu_clock_set_vdd(const char *buf, size_t count)
 	if (!buf)
 		return -EINVAL;
 
+	pr_info("voltage_control: %s\n", buf);
+
 	for (i = 1; i < a53_clk.c.num_fmax; i++) {
 		ret = sscanf(buf, "%d", &mv);
 		if (ret != 1)
