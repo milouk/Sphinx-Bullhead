@@ -590,7 +590,6 @@ static int device_resume_early(struct device *dev, pm_message_t state)
 	return error;
 }
 
-
 extern void print_active_wakeup_sources(void);
 
 /**
