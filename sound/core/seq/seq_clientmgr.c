@@ -676,7 +676,7 @@ static int deliver_to_subscribers(struct snd_seq_client *client,
 	if (atomic)
 		read_lock(&grp->list_lock);
 	else
-		down_read(&grp->list_mutex);
+		down_read_nested(&grp->list_mutex, hop);
 	list_for_each_entry(subs, &grp->list_head, src_list) {
 		event->dest = subs->info.dest;
 		if (subs->info.flags & SNDRV_SEQ_PORT_SUBS_TIMESTAMP)
