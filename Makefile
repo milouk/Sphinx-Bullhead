@@ -378,6 +378,17 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks
+
+# Thanks gcc!
+KBUILD_CFLAGS   += -Wno-trigraphs -Wno-unused-label -Wno-array-bounds -Wno-memset-transposed-args \
+                   -Wno-unused-function -Wno-declaration-after-statement \
+                   -Wno-unused-variable -Wno-parentheses -Wno-maybe-uninitialized \
+                   -Wno-misleading-indentation -Wno-bool-compare -Wno-int-conversion \
+                   -Wno-discarded-qualifiers -Wno-tautological-compare -Wno-incompatible-pointer-types \
+		   -Wno-error=maybe-uninitialized
+
+
+
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
