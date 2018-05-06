@@ -2146,9 +2146,14 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 		initialize_dirent_tail(t, blocksize);
 	}
 
+<<<<<<< HEAD
 	retval = add_dirent_to_buf(handle, &fname, dir, inode, de, bh);
 out:
 	ext4_fname_free_filename(&fname);
+=======
+	retval = add_dirent_to_buf(handle, dentry, inode, de, bh);
+out:
+>>>>>>> v3.10.77
 	brelse(bh);
 	if (retval == 0)
 		ext4_set_inode_state(inode, EXT4_STATE_NEWENTRY);
