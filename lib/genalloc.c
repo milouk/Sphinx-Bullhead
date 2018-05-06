@@ -308,7 +308,7 @@ u64 gen_pool_alloc_aligned(struct gen_pool *pool, size_t size,
 		unsigned long chunk_len;
 		if (size > atomic_read(&chunk->avail))
 			continue;
-		startbit = 0;
+		start_bit = 0;
 		chunk_len = chunk_size(chunk) >> order;
 
 retry:

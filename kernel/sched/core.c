@@ -6727,6 +6727,7 @@ void sched_show_task(struct task_struct *p)
 	show_stack(p, NULL);
 }
 
+
 void show_state_filter(unsigned long state_filter)
 {
 	struct task_struct *g, *p;
@@ -6751,8 +6752,7 @@ void show_state_filter(unsigned long state_filter)
 
 	touch_all_softlockup_watchdogs();
 
-
-#ifdef CONFIG_SCHED_DEBUG
+#ifdef CONFIG_SYSRQ_SCHED_DEBUG
 	if (!state_filter)
 		sysrq_sched_debug_show();
 #endif
