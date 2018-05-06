@@ -183,28 +183,25 @@ void __exit snd_seq_queues_delete(void)
 	}
 }
 
+static void queue_use(struct snd_seq_queue *queue, int client, int use);
+
 /* allocate a new queue -
- * return pointer to new queue or ERR_PTR(-errno) for error
- * The new queue's use_lock is set to 1. It is the caller's responsibility to
- * call snd_use_lock_free(&q->use_lock).
+ * return queue index value or negative value for error
  */
-struct snd_seq_queue *snd_seq_queue_alloc(int client, int locked, unsigned int info_flags)
+int snd_seq_queue_alloc(int client, int locked, unsigned int info_flags)
 {
 	struct snd_seq_queue *q;
 
 	q = queue_new(client, locked);
 	if (q == NULL)
-		return ERR_PTR(-ENOMEM);
+		return -ENOMEM;
 	q->info_flags = info_flags;
 	queue_use(q, client, 1);
-	snd_use_lock_use(&q->use_lock);
 	if (queue_list_add(q) < 0) {
-		snd_use_lock_free(&q->use_lock);
 		queue_delete(q);
-		return ERR_PTR(-ENOMEM);
+		return -ENOMEM;
 	}
-	return q;
-
+	return q->queue;
 }
 
 /* delete a queue - queue must be owned by the client */
@@ -509,19 +506,9 @@ int snd_seq_queue_timer_set_tempo(int queueid, int client,
 	return result;
 }
 
-
-/* use or unuse this queue -
- * if it is the first client, starts the timer.
- * if it is not longer used by any clients, stop the timer.
- */
-int snd_seq_queue_use(int queueid, int client, int use)
+/* use or unuse this queue */
+static void queue_use(struct snd_seq_queue *queue, int client, int use)
 {
-	struct snd_seq_queue *queue;
-
-	queue = queueptr(queueid);
-	if (queue == NULL)
-		return -EINVAL;
-	mutex_lock(&queue->timer_mutex);
 	if (use) {
 		if (!test_and_set_bit(client, queue->clients_bitmap))
 			queue->clients++;
@@ -536,6 +523,21 @@ int snd_seq_queue_use(int queueid, int client, int use)
 	} else {
 		snd_seq_timer_close(queue);
 	}
+}
+
+/* use or unuse this queue -
+ * if it is the first client, starts the timer.
+ * if it is not longer used by any clients, stop the timer.
+ */
+int snd_seq_queue_use(int queueid, int client, int use)
+{
+	struct snd_seq_queue *queue;
+
+	queue = queueptr(queueid);
+	if (queue == NULL)
+		return -EINVAL;
+	mutex_lock(&queue->timer_mutex);
+	queue_use(queue, client, use);
 	mutex_unlock(&queue->timer_mutex);
 	queuefree(queue);
 	return 0;
