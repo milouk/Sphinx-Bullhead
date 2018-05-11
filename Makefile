@@ -1,7 +1,7 @@
 VERSION = 3
 PATCHLEVEL = 10
 SUBLEVEL = 73
-EXTRAVERSION =
+EXTRAVERSION = Sphinx Kernel by milouk @xda-developers
 NAME = TOSSUG Baby Fish
 
 # *DOCUMENTATION*
