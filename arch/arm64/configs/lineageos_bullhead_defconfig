@@ -690,7 +690,7 @@ CONFIG_STRICT_MEMORY_RWX=y
 
 #####################
 #                   #
-#  Custom Features  #
+#  Sphinx Features  #
 #                   #
 #####################
 
@@ -700,6 +700,10 @@ CONFIG_STRICT_MEMORY_RWX=y
 CONFIG_CPU_FREQ_GOV_BLU_ACTIVE=y
 CONFIG_CPU_FREQ_GOV_CHILL=y
 CONFIG_CPU_FREQ_GOV_INTELLIACTIVE=y
+
+#IO Schedulers
+
+CONFIG_IOSCHED_MAPLE=y
 
 CONFIG_QUICK_WAKEUP=y
 CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y
