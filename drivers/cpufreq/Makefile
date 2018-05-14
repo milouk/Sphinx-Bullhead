@@ -20,8 +20,12 @@ obj-$(CONFIG_FINGERPRINT_BOOST)		+= fp-boost.o
 
 obj-$(CONFIG_GENERIC_CPUFREQ_CPU0)	+= cpufreq-cpu0.o
 
+
 # CPU Input Boost
 obj-$(CONFIG_CPU_INPUT_BOOST)		+= cpu_input_boost.o
+# CPU wake boost
+obj-$(CONFIG_CPU_WAKE_BOOST)		+= cpu_wake_boost.o
+
 
 ##################################################################################
 # x86 drivers.
