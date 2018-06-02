@@ -695,9 +695,11 @@ CONFIG_STRICT_MEMORY_RWX=y
 #####################
 
 
-#Local Version
-CONFIG_LOCALVERSION="-Sphinx 2.7"
+# Local Version
+
+CONFIG_LOCALVERSION="-Sphinx-2.7"
 # CONFIG_LOCALVERSION_AUTO is not set
+CONFIG_DEFAULT_HOSTNAME="(none)"
 
 # WireGuard Support
 
