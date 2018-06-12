@@ -34,13 +34,13 @@
 #define START_DELAY_MS                 HZ * 50
 
 #define DEFAULT_MIN_CPUS_ONLINE        1
-#define DEFAULT_MAX_CPUS_ONLINE        8
+#define DEFAULT_MAX_CPUS_ONLINE        6
 #define DEFAULT_MIN_UP_TIME            1500
 
 #define DEFAULT_NR_FSHIFT              3
 #define CAPACITY_RESERVE               50
 
-#if defined(CONFIG_ARCH_MSM8994)
+#if defined(CONFIG_ARCH_MSM8994) || defined(CONFIG_ARCH_MSM8992)
 #define THREAD_CAPACITY                (450 - CAPACITY_RESERVE)
 #else
 #define THREAD_CAPACITY		       (250 - CAPACITY_RESERVE)
@@ -215,7 +215,7 @@ static void __ref hima_hotplug_resume(void)
 {
 	static int cpu = 0;
 
-	max_cpus_online = 8;
+	max_cpus_online = 6;
 	screen_on = 1;
 
 	/* Bring all cores on for fast resume */
