@@ -1517,11 +1517,8 @@ static void exfat_end_buffer_async_write(struct buffer_head *bh, int uptodate)
 
 static int exfat_writepage(struct page *page, struct writeback_control *wbc)
 {
-	if (exfat_readonly(page->mapping->host->i_sb)) {
-		unlock_page(page);
-		SetPageError(page);
-		return 0;
-	}
+	if (exfat_readonly(page->mapping->host->i_sb))
+		return -EROFS;
 	return block_write_full_page_endio(page, exfat_get_block, wbc,
 					   exfat_end_buffer_async_write);
 }
