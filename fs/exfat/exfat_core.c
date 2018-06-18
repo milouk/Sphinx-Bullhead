@@ -2306,7 +2306,7 @@ void sync_alloc_bitmap(struct super_block *sb)
 		return;
 
 	for (i = 0; i < p_fs->map_sectors; i++)
-		bdev_sync_dirty_buffer(p_fs->vol_amap[i], sb, 1);
+		sync_dirty_buffer(p_fs->vol_amap[i]);
 } /* end of sync_alloc_bitmap */
 
 /*
