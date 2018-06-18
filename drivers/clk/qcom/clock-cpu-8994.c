@@ -1171,7 +1171,7 @@ ssize_t cpu_clock_set_vdd(const char *buf, size_t count)
 	}
 
 	/* Write values for A57 */
-	for (i = 1; i < a57_clk.c.num_fmax - 4; i++) {
+	for (i = 1; i < a57_clk.c.num_fmax - 3; i++) {
 		/* Parse buffer */
 		for(bound = 0; bound < 2; bound ++) {
 			ret = sscanf(buf, "%d", &mv);
