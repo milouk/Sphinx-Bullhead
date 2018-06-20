@@ -13,8 +13,6 @@
 
 #include "cpufreq_governor.h"
 
-#define GOV_CHILL	(2)
-
 struct chill_dbs_tuners {
 	unsigned int ignore_nice_load;
 	unsigned int sampling_rate;
