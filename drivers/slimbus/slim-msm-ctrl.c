@@ -23,7 +23,7 @@
 #include <linux/pm_runtime.h>
 #include <linux/of.h>
 #include <linux/of_slimbus.h>
-#include <mach/sps.h>
+#include <linux/msm-sps.h>
 #include <mach/qdsp6v2/apr.h>
 #include "slim-msm.h"
 
