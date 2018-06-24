@@ -386,7 +386,11 @@ KBUILD_CFLAGS   += -Wno-trigraphs -Wno-unused-label -Wno-array-bounds -Wno-memse
                    -Wno-unused-variable -Wno-parentheses -Wno-maybe-uninitialized \
                    -Wno-misleading-indentation -Wno-bool-compare -Wno-int-conversion \
                    -Wno-discarded-qualifiers -Wno-tautological-compare -Wno-incompatible-pointer-types \
-		   -Wno-error=maybe-uninitialized
+		   -Wno-error=maybe-uninitialized -Wno-bool-compare -Wno-misleading-indentation \
+	           -Wno-format -Wno-logical-not-parentheses -Wno-int-in-bool-context -Wno-memset-elt-size \
+                   -Wno-parentheses -Wno-bool-operation -Wno-duplicate-decl-specifier -Wno-stringop-overflow \
+                   -Wno-format-truncation -Wno-format-overflow -fno-modulo-sched -Wno-error=switch-unreachable \
+		   -Wno-switch-unreachable -Wno-error=packed-not-aligned -Wno-packed-not-aligned
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
