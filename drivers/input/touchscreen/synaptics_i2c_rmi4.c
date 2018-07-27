@@ -4674,7 +4674,6 @@ static int synaptics_rmi4_suspend(struct device *dev)
 		return 0;
 	}
 #endif
-
 	if (rmi4_data->stay_awake) {
 		rmi4_data->staying_awake = true;
 		return 0;
@@ -4770,6 +4769,7 @@ static int synaptics_rmi4_resume(struct device *dev)
 		s2w_enable(rmi4_data, false);
 		goto out;
 	}
+#endif
 
 	if (rmi4_data->staying_awake)
 		return 0;
