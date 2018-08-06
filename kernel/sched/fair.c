@@ -6488,7 +6488,7 @@ static void update_cpu_power(struct sched_domain *sd, int cpu)
 		if (sched_feat(ARCH_POWER))
 			power *= arch_scale_smt_power(sd, cpu);
 		else
-			power *= default_scale_smt_power(sd, cpu)
+			power *= default_scale_smt_power(sd, cpu);
 
 		power >>= SCHED_POWER_SHIFT;
 	}
