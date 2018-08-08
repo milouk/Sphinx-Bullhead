@@ -382,15 +382,18 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 
 # Thanks gcc!
 KBUILD_CFLAGS   += -Wno-trigraphs -Wno-unused-label -Wno-array-bounds -Wno-memset-transposed-args \
-                   -Wno-unused-function -Wno-declaration-after-statement \
-                   -Wno-unused-variable -Wno-parentheses -Wno-maybe-uninitialized \
+                   -Wno-declaration-after-statement -Wno-unused-variable -Wno-parentheses -Wno-maybe-uninitialized \
                    -Wno-misleading-indentation -Wno-bool-compare -Wno-int-conversion \
                    -Wno-discarded-qualifiers -Wno-tautological-compare -Wno-incompatible-pointer-types \
-		   -Wno-error=maybe-uninitialized -Wno-bool-compare -Wno-misleading-indentation \
-	           -Wno-format -Wno-logical-not-parentheses -Wno-int-in-bool-context -Wno-memset-elt-size \
+		           -Wno-error=maybe-uninitialized -Wno-bool-compare -Wno-misleading-indentation \
+	               -Wno-format -Wno-logical-not-parentheses -Wno-int-in-bool-context -Wno-memset-elt-size \
                    -Wno-parentheses -Wno-bool-operation -Wno-duplicate-decl-specifier -Wno-stringop-overflow \
                    -Wno-format-truncation -Wno-format-overflow -fno-modulo-sched -Wno-error=switch-unreachable \
-		   -Wno-switch-unreachable -Wno-error=packed-not-aligned -Wno-packed-not-aligned
+		           -Wno-switch-unreachable -Wno-error=packed-not-aligned -Wno-packed-not-aligned -Wno-stringop-truncation\
+                   -Wno-sizeof-pointer-memaccess -Wno-unused-function
+
+KBUILD_CFLAGS   += $(call cc-disable-warning,unused-function,)
+
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
