@@ -89,6 +89,10 @@
 		_val |= 2;				\
 } while (0)
 
+//custom thermal
+#define DEF_TEMP_THRESHOLD 43
+
+
 struct notifier_block msm_thermal_fb_notif;
 
 static int big_core_start;
@@ -133,7 +137,7 @@ static s64 time_pre = 0;
 unsigned int poll_ms;
 unsigned int poll_ms_cool = DEFAULT_POLL_MS_COOL;
 unsigned int poll_ms_cool_screen_off = DEFAULT_POLL_MS_COOL_SCREEN_OFF;
-unsigned int temp_threshold;
+unsigned int temp_threshold = DEF_TEMP_THRESHOLD;
 unsigned int temp_little_off_threshold = 62;
 unsigned int temp_little_off_temp_step = 2;
 unsigned int temp_little_off_cpus_max = 2;
